@@ -2,14 +2,22 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import axios from "axios";
+import { useNavigate } from "react-router";
 
 export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -18,17 +26,20 @@ export default function SignInPage() {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/signin",
+        `${import.meta.env.VITE_BACKEND_URL}/api/auth/signin`,
         { email, password },
         { withCredentials: true }
       );
-      console.log(res.data.user); // user info
-    } catch (err) {
-      setError(err.response?.data?.message || "Something went wrong");
+      if (res.data.user) {
+        console.log(res.data.user);
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      setError(error.response?.data?.message || "Something went wrong");
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
