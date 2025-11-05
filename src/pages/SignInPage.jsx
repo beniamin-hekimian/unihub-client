@@ -9,8 +9,8 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import axios from "axios";
 import { useNavigate } from "react-router";
+import { useAuth } from "@/context/AuthContext";
 
 export default function SignInPage() {
   const [email, setEmail] = useState("");
@@ -18,6 +18,7 @@ export default function SignInPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -25,15 +26,9 @@ export default function SignInPage() {
     setLoading(true);
 
     try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/auth/signin`,
-        { email, password },
-        { withCredentials: true }
-      );
-      if (res.data.user) {
-        console.log(res.data.user);
-        navigate("/dashboard");
-      }
+      const user = await login(email, password);
+      if (user.role === "admin") navigate("/admin/dashboard");
+      else navigate("/student/dashboard");
     } catch (error) {
       setError(error.response?.data?.message || "Something went wrong");
     } finally {
@@ -46,7 +41,7 @@ export default function SignInPage() {
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-center">
-            Sign In
+            Sign in
           </CardTitle>
           <CardDescription className="text-center">
             Sign in to your UniHub account
@@ -78,7 +73,7 @@ export default function SignInPage() {
             </div>
             {error && <p className="text-red-500 text-sm">{error}</p>}
             <Button type="submit" className="w-full mt-2" disabled={loading}>
-              {loading ? "Signing in..." : "Sign In"}
+              {loading ? "Signing in..." : "Sign in"}
             </Button>
           </form>
         </CardContent>
