@@ -2,7 +2,7 @@ import { Outlet } from "react-router";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import Sidebar from "@/components/Sidebar";
 
-export default function DashboardLayout() {
+export default function SidebarLayout() {
   return (
     <SidebarProvider>
       <div className="flex min-h-screen">

@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router";
 import { useAuth } from "@/context/AuthContext";
-import NotFound from "@/components/NotFound";
+import NotFound from "@/pages/NotFound";
 
 export default function AuthGuard({ allowedRole }) {
   const { user } = useAuth();
