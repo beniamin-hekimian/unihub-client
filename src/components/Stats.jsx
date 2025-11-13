@@ -10,7 +10,7 @@ export default function Stats() {
   ];
 
   return (
-    <section className="py-20 bg-secondary text-foreground border-t border-border">
+    <section id="statistics" className="py-20 bg-secondary text-foreground border-t border-border">
       <div className="container mx-auto px-4">
         {/* Heading */}
         <div className="text-center mb-12">

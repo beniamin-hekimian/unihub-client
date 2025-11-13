@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { Link } from "react-router";
+import { handleScroll } from "@/utils/handleScroll";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -18,10 +19,10 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "About", path: "/about" },
-    { name: "Features", path: "/features" },
-    { name: "Contact", path: "/contact" },
+    { name: "Home", id: "home" },
+    { name: "Statistics", id: "statistics" },
+    { name: "Features", id: "features" },
+    { name: "Testimonials", id: "testimonials" },
   ];
 
   return (
@@ -38,13 +39,12 @@ export default function Navbar() {
         {/* Desktop Menu */}
         <ul className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
-            <li key={link.name}>
-              <Link
-                to={link.path}
-                className="text-foreground/80 hover:text-primary transition-colors text-sm font-medium"
-              >
-                {link.name}
-              </Link>
+            <li
+              key={link.name}
+              className="text-foreground/80 hover:text-primary transition-colors text-sm font-medium"
+              onClick={() => handleScroll(link.id)}
+            >
+              {link.name}
             </li>
           ))}
         </ul>
@@ -52,7 +52,7 @@ export default function Navbar() {
         {/* CTA Button */}
         <div className="hidden md:block">
           <Button asChild className="shadow-primary/20">
-            <Link to="/signin">Sign In</Link>
+            <Link to="/signin">Sign in</Link>
           </Button>
         </div>
 
@@ -70,18 +70,18 @@ export default function Navbar() {
         <div className="md:hidden bg-background border-t border-border">
           <ul className="flex flex-col p-4 space-y-3">
             {navLinks.map((link) => (
-              <li key={link.name}>
-                <Link
-                  to={link.path}
-                  className="block text-foreground/80 hover:text-primary transition-colors text-sm font-medium"
-                  onClick={() => setOpen(false)}
-                >
-                  {link.name}
-                </Link>
+              <li
+                key={link.name}
+                onClick={() => {
+                  handleScroll(link.id);
+                  setOpen(false);
+                }}
+              >
+                {link.name}
               </li>
             ))}
-            <li>
-              <Button className="w-full mt-2">Sign In</Button>
+            <li className="self-start">
+              <Button className="w-full mt-2">Sign in</Button>
             </li>
           </ul>
         </div>

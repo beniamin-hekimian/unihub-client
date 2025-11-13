@@ -1,14 +1,30 @@
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router";
 import hero from "@/assets/images/hero.webp";
+import { useAuth } from "@/context/AuthContext";
+import { useNavigate } from "react-router";
+import { handleScroll } from "@/utils/handleScroll";
 
-export default function HeroSection() {
+export default function Hero() {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  function handleGetStarted() {
+    const path = user?.role ? `/${user.role}/dashboard` : "/signin";
+    navigate(path, { replace: true });
+  }
+
   return (
-    <section className="relative flex items-center bg-linear-to-br from-secondary via-background to-muted overflow-hidden">
-      <div className="container mx-auto px-4 py-16 md:py-24">
+    <section
+      id="home"
+      className="relative flex items-center bg-linear-to-br from-secondary via-background to-muted overflow-hidden"
+    >
+      <div className="container mx-auto px-4 py-20 md:py-24">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
           {/* Left Column - Content */}
-          <div data-aos="fade-right" className="flex flex-col gap-6 text-center lg:text-left">
+          <div
+            data-aos="fade-right"
+            className="flex flex-col gap-6 text-center lg:text-left"
+          >
             {/* Badge */}
             <div className="inline-flex items-center gap-2 self-center lg:self-start">
               <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary">
@@ -44,19 +60,19 @@ export default function HeroSection() {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mt-4">
               <Button
-                asChild
                 size="lg"
                 className="shadow-lg shadow-primary/20 hover:shadow-primary/30"
+                onClick={() => handleGetStarted()}
               >
-                <Link to="/signin">Get Started</Link>
+                Get Started
               </Button>
               <Button
-                asChild
                 size="lg"
                 variant="outline"
                 className="hover:cursor-pointer"
+                onClick={() => handleScroll("features")}
               >
-                <Link to="/features">Discover Features</Link>
+                Discover Features
               </Button>
             </div>
 
@@ -78,7 +94,10 @@ export default function HeroSection() {
           </div>
 
           {/* Right Column - Illustration */}
-          <div data-aos="fade-left" className="relative flex items-center justify-center lg:justify-end">
+          <div
+            data-aos="fade-left"
+            className="relative flex items-center justify-center lg:justify-end"
+          >
             <div className="relative w-full max-w-lg px-8 py-8">
               {/* Decorative Elements - Updated to use muted colors */}
               <div className="absolute top-0 left-0 h-72 w-72 rounded-full bg-primary/5 blur-3xl -z-10" />
