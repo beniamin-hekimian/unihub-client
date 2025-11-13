@@ -7,7 +7,7 @@ import SignInPage from "@/pages/SignInPage";
 import AuthGuard from "@/components/AuthGuard";
 import AdminDashboard from "@/pages/admin/Dashboard";
 import StudentDashboard from "@/pages/student/Dashboard";
-import Unauthorized from "@/components/Unauthorized";
+import NotFound from "@/components/NotFound";
 
 export default function App() {
   useEffect(() => {
@@ -20,9 +20,8 @@ export default function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route index element={<LandingPage />} />
         <Route path="/signin" element={<SignInPage />} />
-        <Route path="/unauthorized" element={<Unauthorized />} />
 
         {/* Admin routes */}
         <Route element={<AuthGuard allowedRole="admin" />}>
@@ -33,6 +32,8 @@ export default function App() {
         <Route element={<AuthGuard allowedRole="student" />}>
           <Route path="/student/dashboard" element={<StudentDashboard />} />
         </Route>
+
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );
