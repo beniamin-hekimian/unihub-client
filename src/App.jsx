@@ -1,13 +1,15 @@
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { Route, Routes } from "react-router";
+import { Route, Routes, Navigate } from "react-router";
 import LandingPage from "@/pages/LandingPage";
 import SignInPage from "@/pages/SignInPage";
 import AuthGuard from "@/components/AuthGuard";
-import AdminDashboard from "@/pages/admin/Dashboard";
 import StudentDashboard from "@/pages/student/Dashboard";
 import NotFound from "@/components/NotFound";
+import DashboardLayout from "@/pages/dashboard/Layout";
+import Dashboard from "@/pages/dashboard/Dashboard";
+import AdminStudents from "@/pages/admin/Students";
 
 export default function App() {
   useEffect(() => {
@@ -25,7 +27,11 @@ export default function App() {
 
         {/* Admin routes */}
         <Route element={<AuthGuard allowedRole="admin" />}>
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin" element={<DashboardLayout />}>
+            <Route index element={<Navigate to="dashboard" replace />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="students" element={<AdminStudents />} />
+          </Route>
         </Route>
 
         {/* Student routes */}
