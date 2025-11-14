@@ -11,7 +11,7 @@ export default function Dashboard() {
     <section className="h-full flex justify-center items-center p-4">
       <Card className="max-w-sm w-full shadow-lg border border-border">
         <CardHeader className="flex items-center gap-4 border-b border-border pb-4">
-          <Avatar gender={user.gender} />
+          <Avatar gender={user.gender} className="h-16 w-16" />
           <CardTitle className="text-lg md:text-xl font-semibold text-foreground">
             {user.name}
           </CardTitle>

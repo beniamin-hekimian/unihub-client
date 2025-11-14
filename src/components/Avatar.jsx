@@ -4,17 +4,17 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import maleAvatar from "@/assets/images/male.png";
 import femaleAvatar from "@/assets/images/female.png";
 
-export default function UserAvatar({ gender }) {
+export default function UserAvatar({ gender, className }) {
   // select image based on gender
   const imageSrc =
     gender === "male" ? maleAvatar : gender === "female" ? femaleAvatar : null;
 
   return (
-    <Avatar className="h-16 w-16">
+    <Avatar className={className}>
       {imageSrc && <AvatarImage src={imageSrc} alt="User avatar" />}
 
       <AvatarFallback className="bg-muted text-muted-foreground">
-        <User className="h-6 w-6" />
+        <User />
       </AvatarFallback>
     </Avatar>
   );

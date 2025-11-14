@@ -43,7 +43,7 @@ export default function AppSidebar() {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel
-            className="text-primary py-6 font-bold text-lg self-start hover:cursor-pointer"
+            className="text-primary py-6 font-bold text-xl self-start hover:cursor-pointer"
             onClick={() => navigate("/")}
           >
             UniHub
@@ -56,7 +56,7 @@ export default function AppSidebar() {
                     onClick={() => navigate(item.url)}
                     className={`flex items-center gap-2 px-2 py-1 rounded-md w-full text-left ${
                       location.pathname === item.url
-                        ? "bg-primary/10 text-primary font-semibold"
+                        ? "bg-primary/10 text-primary font-semibold hover:bg-primary/10 hover:text-primary"
                         : "text-muted-foreground hover:bg-primary/5"
                     }`}
                   >

@@ -3,10 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { Link } from "react-router";
 import { handleScroll } from "@/utils/handleScroll";
+import { useAuth } from "@/context/AuthContext";
+import Avatar from "@/components/Avatar";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
+  const { user } = useAuth();
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -41,7 +44,7 @@ export default function Navbar() {
           {navLinks.map((link) => (
             <li
               key={link.name}
-              className="text-foreground/80 hover:text-primary transition-colors text-sm font-medium"
+              className="text-foreground/80 hover:text-primary transition-colors text-sm font-medium cursor-pointer"
               onClick={() => handleScroll(link.id)}
             >
               {link.name}
@@ -49,11 +52,17 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* CTA Button */}
+        {/* CTA / Avatar */}
         <div className="hidden md:block">
-          <Button asChild className="shadow-primary/20">
-            <Link to="/signin">Sign in</Link>
-          </Button>
+          {!user ? (
+            <Button asChild className="shadow-primary/20">
+              <Link to="/signin">Sign in</Link>
+            </Button>
+          ) : (
+            <Link to={`/${user.role}/dashboard`}>
+              <Avatar gender={user.gender} className="h-10 w-10" />
+            </Link>
+          )}
         </div>
 
         {/* Mobile Toggle */}
@@ -72,6 +81,7 @@ export default function Navbar() {
             {navLinks.map((link) => (
               <li
                 key={link.name}
+                className="cursor-pointer"
                 onClick={() => {
                   handleScroll(link.id);
                   setOpen(false);
@@ -80,8 +90,16 @@ export default function Navbar() {
                 {link.name}
               </li>
             ))}
-            <li className="self-start">
-              <Button className="w-full mt-2">Sign in</Button>
+            <li>
+              {!user ? (
+                <Button>
+                  <Link to="/signin">Sign in</Link>
+                </Button>
+              ) : (
+                <Link to={`/${user.role}/dashboard`}>
+                  Dashboard
+                </Link>
+              )}
             </li>
           </ul>
         </div>
