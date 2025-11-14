@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from "react-router";
 import {
   Sidebar,
   SidebarContent,
+  SidebarHeader,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -41,7 +42,12 @@ export default function AppSidebar() {
     <Sidebar className="hidden md:flex">
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>UniHub</SidebarGroupLabel>
+          <SidebarGroupLabel
+            className="text-primary py-6 font-bold text-lg self-start hover:cursor-pointer"
+            onClick={() => navigate("/")}
+          >
+            UniHub
+          </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
