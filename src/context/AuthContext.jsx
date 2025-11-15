@@ -16,7 +16,7 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     async function fetchUser() {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/auth/me`, { withCredentials: true });
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth/me`, { withCredentials: true });
         setUser(res.data.user);
       } catch {
         setUser(null);
@@ -30,7 +30,7 @@ export function AuthProvider({ children }) {
   // Login function
   async function login(email, password) {
     const res = await axios.post(
-      `${import.meta.env.VITE_BACKEND_URL}/api/auth/signin`,
+      `${import.meta.env.VITE_BACKEND_URL}/auth/signin`,
       { email, password },
       { withCredentials: true }
     );
@@ -40,7 +40,7 @@ export function AuthProvider({ children }) {
 
   // Logout function
   async function logout() {
-    await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/signout`, {}, { withCredentials: true });
+    await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/signout`, {}, { withCredentials: true });
     setUser(null);
   };
 
