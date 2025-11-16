@@ -1,11 +1,10 @@
-import { Home, Users, BookOpen, FileText } from "lucide-react";
+import { Home, Users, BookOpen, FileText, GraduationCap } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { useLocation, useNavigate } from "react-router";
 
 import {
   Sidebar,
   SidebarContent,
-  SidebarHeader,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -24,7 +23,8 @@ export default function AppSidebar() {
   const roleItems = {
     admin: [
       { title: "Dashboard", url: "/admin/dashboard", icon: Home },
-      { title: "Students", url: "/admin/students", icon: Users },
+      { title: "Students", url: "/admin/students", icon: GraduationCap },
+      { title: "Professors", url: "/admin/professors", icon: Users },
     ],
     student: [
       { title: "Dashboard", url: "/student/dashboard", icon: Home },

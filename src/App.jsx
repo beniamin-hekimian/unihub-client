@@ -7,6 +7,7 @@ import NotFound from "@/pages/NotFound";
 import SidebarLayout from "@/components/SidebarLayout";
 import Dashboard from "@/pages/Dashboard";
 import AdminStudents from "@/pages/admin/Students";
+import AdminProfessors from "@/pages/admin/Professors";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -23,6 +24,7 @@ export default function App() {
             <Route index element={<Navigate to="dashboard" replace />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="students" element={<AdminStudents />} />
+            <Route path="professors" element={<AdminProfessors />} />
           </Route>
         </Route>
 
