@@ -7,7 +7,7 @@ export default function SidebarLayout() {
     <SidebarProvider>
       <div className="flex w-full min-h-screen">
         <Sidebar />
-        <main className="flex-1 p-6">
+        <main className="flex-1 p-6 w-full">
           <SidebarTrigger className="fixed" />
           <Outlet />
         </main>
