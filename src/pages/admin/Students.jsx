@@ -28,9 +28,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-// Accessibility
-Modal.setAppElement("#root");
-
 export default function Students() {
   const [students, setStudents] = useState([]);
   const [formData, setFormData] = useState({
