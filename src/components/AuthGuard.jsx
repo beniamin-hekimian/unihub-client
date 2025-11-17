@@ -5,7 +5,7 @@ import NotFound from "@/pages/NotFound";
 export default function AuthGuard({ allowedRole }) {
   const { user } = useAuth();
 
-  if (!user) return <Navigate to="/signin" replace />;
+  if (!user) return <Navigate to="/" replace />;
 
   if (user.role !== allowedRole) {
     return <NotFound />;
