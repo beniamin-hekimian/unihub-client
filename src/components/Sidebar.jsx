@@ -1,4 +1,4 @@
-import { Home, Users, BookOpen, FileText, GraduationCap } from "lucide-react";
+import { Home, Users, FileText, GraduationCap, BookOpen } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { useLocation, useNavigate } from "react-router";
 
@@ -25,6 +25,7 @@ export default function AppSidebar() {
       { title: "Dashboard", url: "/admin/dashboard", icon: Home },
       { title: "Students", url: "/admin/students", icon: GraduationCap },
       { title: "Professors", url: "/admin/professors", icon: Users },
+      { title: "Subjects", url: "/admin/subjects", icon: BookOpen },
     ],
     student: [
       { title: "Dashboard", url: "/student/dashboard", icon: Home },
