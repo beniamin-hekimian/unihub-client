@@ -240,7 +240,7 @@ export default function Subjects() {
 
   return (
     <section className="h-full flex gap-8 flex-col items-center">
-      <h1 className="font-bold text-2xl text-center">Manage Subjects</h1>
+      <h1 className="font-bold text-2xl text-center">Manage University Subjects</h1>
 
       {/* Form */}
       <form

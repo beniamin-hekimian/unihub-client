@@ -38,13 +38,12 @@ export default function AppSidebar() {
       { title: "Professors", url: "/admin/professors", icon: Users },
       { title: "Subjects", url: "/admin/subjects", icon: BookOpen },
     ],
-    student: [
-      { title: "Dashboard", url: "/student/dashboard", icon: Home },
-      { title: "Subjects", url: "/student/subjects", icon: BookOpen },
-    ],
     professor: [
       { title: "Dashboard", url: "/professor/dashboard", icon: Home },
-      { title: "Exams", url: "/professor/exams", icon: FileText },
+      { title: "Subjects", url: "/professor/subjects", icon: BookOpen },
+    ],
+    student: [
+      { title: "Dashboard", url: "/student/dashboard", icon: Home },
     ],
   };
 

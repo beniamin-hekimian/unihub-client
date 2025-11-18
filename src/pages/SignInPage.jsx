@@ -27,8 +27,7 @@ export default function SignInPage() {
 
     try {
       const user = await login(email, password);
-      if (user.role === "admin") navigate("/admin/dashboard");
-      else navigate("/student/dashboard");
+      navigate(`/${user.role}/dashboard`);
     } catch (error) {
       setError(error.response?.data?.message || "Something went wrong");
     } finally {

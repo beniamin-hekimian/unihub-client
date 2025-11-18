@@ -9,6 +9,7 @@ import Dashboard from "@/pages/Dashboard";
 import AdminStudents from "@/pages/admin/Students";
 import AdminProfessors from "@/pages/admin/Professors";
 import AdminSubjects from "@/pages/admin/Subjects";
+import ProfessorSubjects from "@/pages/professor/Subjects";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -27,6 +28,15 @@ export default function App() {
             <Route path="students" element={<AdminStudents />} />
             <Route path="professors" element={<AdminProfessors />} />
             <Route path="subjects" element={<AdminSubjects />} />
+          </Route>
+        </Route>
+
+        {/* Professor routes */}
+        <Route element={<AuthGuard allowedRole="professor" />}>
+          <Route path="/professor" element={<SidebarLayout />}>
+            <Route index element={<Navigate to="dashboard" replace />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="subjects" element={<ProfessorSubjects />} />
           </Route>
         </Route>
 
