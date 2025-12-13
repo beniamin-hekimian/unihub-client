@@ -60,6 +60,26 @@ export default function Dashboard() {
               </div>
             </>
           )}
+
+          {/* Extra student-only info */}
+          {user.role === "student" && (
+            <>
+              <Separator />
+              <div className="flex justify-between">
+                <strong className="text-foreground font-medium">Year:</strong>
+                <span className="text-muted-foreground">
+                  {user.student.year || "—"}
+                </span>
+              </div>
+
+              <div className="flex justify-between">
+                <strong className="text-foreground font-medium">Major:</strong>
+                <span className="text-muted-foreground">
+                  {user.student.major || "—"}
+                </span>
+              </div>
+            </>
+          )}
         </CardContent>
       </Card>
     </section>

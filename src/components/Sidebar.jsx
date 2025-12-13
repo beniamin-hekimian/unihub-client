@@ -44,6 +44,7 @@ export default function AppSidebar() {
     ],
     student: [
       { title: "Dashboard", url: "/student/dashboard", icon: Home },
+      { title: "Subjects", url: "/student/subjects", icon: BookOpen },
     ],
   };
 

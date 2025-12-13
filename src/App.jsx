@@ -2,7 +2,6 @@ import { Route, Routes, Navigate } from "react-router";
 import LandingPage from "@/pages/LandingPage";
 import SignInPage from "@/pages/SignInPage";
 import AuthGuard from "@/components/AuthGuard";
-import StudentDashboard from "@/pages/student/Dashboard";
 import NotFound from "@/pages/NotFound";
 import SidebarLayout from "@/components/SidebarLayout";
 import Dashboard from "@/pages/Dashboard";
@@ -10,6 +9,7 @@ import AdminStudents from "@/pages/admin/Students";
 import AdminProfessors from "@/pages/admin/Professors";
 import AdminSubjects from "@/pages/admin/Subjects";
 import ProfessorSubjects from "@/pages/professor/Subjects";
+import StudentSubjects from "@/pages/student/Subjects";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -42,7 +42,11 @@ export default function App() {
 
         {/* Student routes */}
         <Route element={<AuthGuard allowedRole="student" />}>
-          <Route path="/student/dashboard" element={<StudentDashboard />} />
+          <Route path="/student" element={<SidebarLayout />}>
+            <Route index element={<Navigate to="dashboard" replace />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="subjects" element={<StudentSubjects />} />
+          </Route>
         </Route>
 
         <Route path="*" element={<NotFound />} />
