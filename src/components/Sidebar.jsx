@@ -75,7 +75,7 @@ export default function AppSidebar() {
               className="text-primary py-6 font-bold text-xl self-start hover:cursor-pointer"
               onClick={() => navigate("/")}
             >
-              UniHub
+              <img src="/logo.png" alt="logo" className="h-6" />
             </SidebarGroupLabel>
 
             <SidebarGroupContent>

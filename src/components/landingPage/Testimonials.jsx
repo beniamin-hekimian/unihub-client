@@ -30,9 +30,12 @@ export default function Testimonials() {
   ];
 
   return (
-    <section id="testimonials" className="py-24 bg-secondary text-foreground">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-14">
+    <section
+      id="testimonials"
+      className="pt-12 pb-12 bg-secondary text-foreground"
+    >
+      <div className="container max-w-5xl mx-auto px-4">
+        <div className="text-center mb-8">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
             What Students <span className="text-primary">Say</span>
           </h2>
@@ -46,7 +49,7 @@ export default function Testimonials() {
           {testimonials.map((t, i) => (
             <Card
               key={i}
-              className="bg-card border border-border shadow-md shadow-primary/10 rounded-2xl hover:shadow-primary/20 transition-all duration-300 flex flex-col h-full"
+              className="p-0 bg-card border border-border shadow-md shadow-primary/10 rounded-2xl hover:shadow-primary/20 transition-all duration-300 flex flex-col h-full"
               data-aos="fade-up"
             >
               <CardContent className="p-8 flex flex-col text-center h-full">

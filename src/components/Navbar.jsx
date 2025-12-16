@@ -36,7 +36,7 @@ export default function Navbar() {
       <nav className="container mx-auto flex items-center justify-between py-4 px-4">
         {/* Logo */}
         <Link to="/" className="text-xl font-bold text-primary">
-          UniHub
+          <img src="/logo.png" alt="logo" className="h-6" />
         </Link>
 
         {/* Desktop Menu */}

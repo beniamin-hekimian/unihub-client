@@ -7,27 +7,30 @@ export default function Features() {
   const features = [
     {
       title: "Smart Course Access",
-      desc: "Access all your courses from one streamlined dashboard designed for focus and clarity. No clutter, just learning.",
+      desc: "Access all your courses from one streamlined dashboard designed for focus and clarity. No clutter, just learning that keeps you organized and on track throughout the semester.",
       image: featureCourse,
       cta: "Explore Courses",
     },
     {
       title: "Instant Notifications",
-      desc: "Never miss an update, get real-time notifications for new grades, class changes, and university announcements.",
+      desc: "Never miss an update, get real-time notifications for new grades, class changes, and university announcements. Stay informed the moment something important happens.",
       image: featureNotify,
       cta: "Enable Alerts",
     },
     {
       title: "Privacy & Security",
-      desc: "Your academic data is encrypted and protected with enterprise-level security protocols for full peace of mind.",
+      desc: "Your academic data is encrypted and protected with enterprise-level security protocols for full peace of mind. We prioritize confidentiality and secure access at every level.",
       image: featureSecurity,
       cta: "Learn More",
     },
   ];
 
   return (
-    <section id="features" className="py-24 bg-background text-foreground">
-      <div className="container mx-auto px-4">
+    <section
+      id="features"
+      className="pt-20 pb-12 bg-background text-foreground"
+    >
+      <div className="container max-w-5xl mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold">
             Powerful <span className="text-primary">Features</span> for Students
@@ -37,11 +40,11 @@ export default function Features() {
           </p>
         </div>
 
-        <div className="flex flex-col gap-16">
+        <div className="flex flex-col gap-12">
           {features.map((feature, i) => (
             <div
               key={i}
-              className={`flex flex-col md:flex-row items-center gap-10 ${
+              className={`flex flex-col md:flex-row items-center gap-12 ${
                 i % 2 === 1 ? "md:flex-row-reverse" : ""
               }`}
             >
@@ -51,7 +54,7 @@ export default function Features() {
                   <img
                     src={feature.image}
                     alt={feature.title}
-                    className="w-full h-[300px] object-cover"
+                    className="w-full h-75 object-cover"
                   />
                 </div>
               </div>
@@ -62,9 +65,6 @@ export default function Features() {
                 <p className="text-muted-foreground mb-6 leading-relaxed">
                   {feature.desc}
                 </p>
-                <Button variant="outline" className="hover:cursor-pointer">
-                  {feature.cta}
-                </Button>
               </div>
             </div>
           ))}

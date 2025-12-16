@@ -16,10 +16,10 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative flex items-center bg-linear-to-br from-secondary via-background to-muted overflow-hidden"
+      className="pt-24 pb-12 relative flex items-center bg-linear-to-br from-secondary via-background to-muted overflow-hidden"
     >
-      <div className="container mx-auto px-4 py-20 md:py-24">
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
+      <div className="container max-w-5xl mx-auto px-4">
+        <div className="grid lg:grid-cols-2 lg:gap-16 items-center">
           {/* Left Column - Content */}
           <div
             data-aos="fade-right"
@@ -58,7 +58,7 @@ export default function Hero() {
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mt-4">
+            <div className="flex flex-col items-center sm:flex-row gap-4 justify-center lg:justify-start">
               <Button
                 size="lg"
                 className="shadow-lg shadow-primary/20 hover:shadow-primary/30"
@@ -77,7 +77,7 @@ export default function Hero() {
             </div>
 
             {/* Trust Indicators - Updated colors to use CSS variables */}
-            <div className="flex flex-wrap items-center gap-6 justify-center lg:justify-start mt-8 text-sm text-muted-foreground">
+            <div className="flex flex-wrap items-center gap-6 justify-center lg:justify-start mt-4 text-sm text-muted-foreground">
               <div className="flex items-center gap-2">
                 <div className="h-2 w-2 rounded-full bg-green-500" />
                 <span>Secure & Encrypted</span>

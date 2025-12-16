@@ -10,8 +10,8 @@ export default function Stats() {
   ];
 
   return (
-    <section id="statistics" className="py-20 bg-secondary text-foreground border-t border-border">
-      <div className="container mx-auto px-4">
+    <section id="statistics" className="pt-20 pb-12 bg-secondary text-foreground border-t border-border">
+      <div className="container max-w-5xl mx-auto px-4">
         {/* Heading */}
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
@@ -28,7 +28,7 @@ export default function Stats() {
           {stats.map((stat, id) => (
             <Card
               key={id}
-              className="bg-card border border-border rounded-2xl shadow-md hover:shadow-lg hover:shadow-primary/10 transition-all duration-300"
+              className="p-0 bg-card border border-border rounded-2xl shadow-md hover:shadow-lg hover:shadow-primary/10 transition-all duration-300"
             >
               <CardContent className="flex flex-col items-center justify-center text-center p-8">
                 <p className="text-3xl md:text-4xl font-bold text-primary">
