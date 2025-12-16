@@ -9,7 +9,12 @@ import AdminStudents from "@/pages/admin/Students";
 import AdminProfessors from "@/pages/admin/Professors";
 import AdminSubjects from "@/pages/admin/Subjects";
 import ProfessorSubjects from "@/pages/professor/Subjects";
+import ProfessorExams from "@/pages/professor/Exams";
+import ProfessorResults from "@/pages/professor/Results";
+import ExamResults from "@/pages/professor/ExamResults";
 import StudentSubjects from "@/pages/student/Subjects";
+import StudentExams from "@/pages/student/Exams";
+import StudentResults from "@/pages/student/Results";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -37,6 +42,9 @@ export default function App() {
             <Route index element={<Navigate to="dashboard" replace />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="subjects" element={<ProfessorSubjects />} />
+            <Route path="exams" element={<ProfessorExams />} />
+            <Route path="results" element={<ProfessorResults />} />
+            <Route path="results/:examId" element={<ExamResults />} />
           </Route>
         </Route>
 
@@ -46,6 +54,8 @@ export default function App() {
             <Route index element={<Navigate to="dashboard" replace />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="subjects" element={<StudentSubjects />} />
+            <Route path="exams" element={<StudentExams />} />
+            <Route path="results" element={<StudentResults />} />
           </Route>
         </Route>
 

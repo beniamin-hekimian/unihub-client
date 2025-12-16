@@ -2,6 +2,7 @@ import {
   Home,
   Users,
   FileText,
+  ListChecks,
   GraduationCap,
   BookOpen,
   LogOut,
@@ -41,10 +42,14 @@ export default function AppSidebar() {
     professor: [
       { title: "Dashboard", url: "/professor/dashboard", icon: Home },
       { title: "Subjects", url: "/professor/subjects", icon: BookOpen },
+      { title: "Exams", url: "/professor/exams", icon: FileText },
+      { title: "Results", url: "/professor/results", icon: ListChecks },
     ],
     student: [
       { title: "Dashboard", url: "/student/dashboard", icon: Home },
       { title: "Subjects", url: "/student/subjects", icon: BookOpen },
+      { title: "Exams", url: "/student/exams", icon: FileText },
+      { title: "Results", url: "/student/results", icon: ListChecks },
     ],
   };
 
