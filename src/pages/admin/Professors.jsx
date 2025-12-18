@@ -30,6 +30,7 @@ import {
 
 export default function Professors() {
   const [professors, setProfessors] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -51,10 +52,16 @@ export default function Professors() {
           { withCredentials: true }
         );
         if (res.data.professors) {
-          setProfessors(res.data.professors);
+          // Sort by name ascending
+          const sorted = res.data.professors.sort((a, b) =>
+            a.userId.name.localeCompare(b.userId.name)
+          );
+          setProfessors(sorted);
         }
       } catch (err) {
         console.error(err);
+      } finally {
+        setLoading(false);
       }
     }
     fetchProfessors();
@@ -361,57 +368,65 @@ export default function Professors() {
       </form>
 
       {/* Professors table */}
-      <Table className="max-w-3xl mx-auto">
-        <TableHeader>
-          <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Email</TableHead>
-            <TableHead>Gender</TableHead>
-            <TableHead>Phone</TableHead>
-            <TableHead>Department</TableHead>
-            <TableHead className="text-center">Edit</TableHead>
-            <TableHead className="text-center">Delete</TableHead>
-          </TableRow>
-        </TableHeader>
-
-        <TableBody>
-          {professors.map((professor) => (
-            <TableRow key={professor._id}>
-              <TableCell className="font-medium">
-                {professor.userId.name}
-              </TableCell>
-              <TableCell>{professor.userId.email}</TableCell>
-              <TableCell>{professor.userId.gender}</TableCell>
-              <TableCell>{professor.phone}</TableCell>
-              <TableCell>{professor.department}</TableCell>
-
-              {/* Edit button */}
-              <TableCell className="text-center">
-                <Button
-                  size="icon"
-                  variant="outline"
-                  className="rounded-md hover:bg-yellow-500 hover:text-white"
-                  onClick={() => handleEdit(professor)}
-                >
-                  <Pencil className="w-4 h-4" />
-                </Button>
-              </TableCell>
-
-              {/* Delete button */}
-              <TableCell className="text-center">
-                <Button
-                  size="icon"
-                  variant="outline"
-                  className="rounded-md hover:bg-red-500 hover:text-white"
-                  onClick={() => openDeleteModal(professor)}
-                >
-                  <Trash className="w-4 h-4" />
-                </Button>
-              </TableCell>
+      {loading ? (
+        <p className="text-center mt-4 text-gray-500">Loading professors...</p>
+      ) : professors.length === 0 ? (
+        <p className="text-center mt-4 text-gray-500">
+          No professors found yet.
+        </p>
+      ) : (
+        <Table className="max-w-3xl mx-auto">
+          <TableHeader>
+            <TableRow>
+              <TableHead>Name</TableHead>
+              <TableHead>Email</TableHead>
+              <TableHead>Gender</TableHead>
+              <TableHead>Phone</TableHead>
+              <TableHead>Department</TableHead>
+              <TableHead className="text-center">Edit</TableHead>
+              <TableHead className="text-center">Delete</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+
+          <TableBody>
+            {professors.map((professor) => (
+              <TableRow key={professor._id}>
+                <TableCell className="font-medium">
+                  {professor.userId.name}
+                </TableCell>
+                <TableCell>{professor.userId.email}</TableCell>
+                <TableCell>{professor.userId.gender}</TableCell>
+                <TableCell>{professor.phone}</TableCell>
+                <TableCell>{professor.department}</TableCell>
+
+                {/* Edit */}
+                <TableCell className="text-center">
+                  <Button
+                    size="icon"
+                    variant="outline"
+                    className="rounded-md hover:bg-yellow-500 hover:text-white"
+                    onClick={() => handleEdit(professor)}
+                  >
+                    <Pencil className="w-4 h-4" />
+                  </Button>
+                </TableCell>
+
+                {/* Delete */}
+                <TableCell className="text-center">
+                  <Button
+                    size="icon"
+                    variant="outline"
+                    className="rounded-md hover:bg-red-500 hover:text-white"
+                    onClick={() => openDeleteModal(professor)}
+                  >
+                    <Trash className="w-4 h-4" />
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      )}
 
       {/* Delete modal */}
       <Modal

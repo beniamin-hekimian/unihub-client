@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import hero from "@/assets/images/hero.webp";
+// import hero from "@/assets/images/hero.webp";
 import { useAuth } from "@/context/AuthContext";
 import { useNavigate } from "react-router";
 import { handleScroll } from "@/utils/handleScroll";
@@ -106,7 +106,7 @@ export default function Hero() {
               {/* Main Illustration Container */}
               <div className="relative rounded-2xl bg-card p-8 shadow-2xl shadow-primary/10 border border-border">
                 <img
-                  src={hero}
+                  src="/homepage/hero.webp"
                   alt="hero section student image"
                   className="w-full h-auto rounded-lg"
                 />

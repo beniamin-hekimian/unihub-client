@@ -1,13 +1,10 @@
 import { User } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-// local avatar images
-import maleAvatar from "@/assets/images/male.png";
-import femaleAvatar from "@/assets/images/female.png";
 
 export default function UserAvatar({ gender, className }) {
   // select image based on gender
   const imageSrc =
-    gender === "male" ? maleAvatar : gender === "female" ? femaleAvatar : null;
+    gender === "male" ? "/male.png" : gender === "female" ? "/female.png" : null;
 
   return (
     <Avatar className={className}>

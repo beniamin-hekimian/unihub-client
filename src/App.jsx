@@ -1,67 +1,40 @@
-import { Route, Routes, Navigate } from "react-router";
-import LandingPage from "@/pages/LandingPage";
-import SignInPage from "@/pages/SignInPage";
-import AuthGuard from "@/components/AuthGuard";
-import NotFound from "@/pages/NotFound";
-import SidebarLayout from "@/components/SidebarLayout";
-import Dashboard from "@/pages/Dashboard";
-import AdminStudents from "@/pages/admin/Students";
-import AdminProfessors from "@/pages/admin/Professors";
-import AdminSubjects from "@/pages/admin/Subjects";
-import ProfessorSubjects from "@/pages/professor/Subjects";
-import ProfessorExams from "@/pages/professor/Exams";
-import ProfessorResults from "@/pages/professor/Results";
-import ExamResults from "@/pages/professor/ExamResults";
-import StudentSubjects from "@/pages/student/Subjects";
-import StudentExams from "@/pages/student/Exams";
-import StudentResults from "@/pages/student/Results";
+import { Routes, Route } from "react-router";
+import { Suspense, lazy } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loading from "@/components/Loading";
+
+// Public pages
+const Homepage = lazy(() => import("@/pages/Homepage"));
+const SignInPage = lazy(() => import("@/pages/SignInPage"));
+const NotFound = lazy(() => import("@/pages/NotFound"));
+
+// Role-based routes
+import { adminRoutes } from "@/routes/AdminRoutes";
+import { professorRoutes } from "@/routes/ProfessorRoutes";
+import { studentRoutes } from "@/routes/StudentRoutes";
 
 export default function App() {
   return (
     <>
-      <Routes>
-        <Route index element={<LandingPage />} />
-        <Route path="/signin" element={<SignInPage />} />
+      {/* Suspense wraps all lazy-loaded pages */}
+      <Suspense fallback={<Loading />}>
+        <Routes>
+          {/* Public routes */}
+          <Route index element={<Homepage />} />
+          <Route path="/signin" element={<SignInPage />} />
 
-        {/* Admin routes */}
-        <Route element={<AuthGuard allowedRole="admin" />}>
-          <Route path="/admin" element={<SidebarLayout />}>
-            <Route index element={<Navigate to="dashboard" replace />} />
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="students" element={<AdminStudents />} />
-            <Route path="professors" element={<AdminProfessors />} />
-            <Route path="subjects" element={<AdminSubjects />} />
-          </Route>
-        </Route>
+          {/* Role-based routes */}
+          {adminRoutes}
+          {professorRoutes}
+          {studentRoutes}
 
-        {/* Professor routes */}
-        <Route element={<AuthGuard allowedRole="professor" />}>
-          <Route path="/professor" element={<SidebarLayout />}>
-            <Route index element={<Navigate to="dashboard" replace />} />
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="subjects" element={<ProfessorSubjects />} />
-            <Route path="exams" element={<ProfessorExams />} />
-            <Route path="results" element={<ProfessorResults />} />
-            <Route path="results/:examId" element={<ExamResults />} />
-          </Route>
-        </Route>
+          {/* Catch-all 404 */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
 
-        {/* Student routes */}
-        <Route element={<AuthGuard allowedRole="student" />}>
-          <Route path="/student" element={<SidebarLayout />}>
-            <Route index element={<Navigate to="dashboard" replace />} />
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="subjects" element={<StudentSubjects />} />
-            <Route path="exams" element={<StudentExams />} />
-            <Route path="results" element={<StudentResults />} />
-          </Route>
-        </Route>
-
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-      {/* Toast container for notifications */}
+      {/* Global toast notifications */}
       <ToastContainer />
     </>
   );

@@ -30,6 +30,7 @@ import {
 
 export default function Students() {
   const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(true); // new loading state
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -50,11 +51,15 @@ export default function Students() {
           `${import.meta.env.VITE_BACKEND_URL}/students`,
           { withCredentials: true }
         );
-        if (res.data.students) {
-          setStudents(res.data.students);
-        }
+        // Sort by name
+        const sortedStudents = res.data.students.sort((a, b) =>
+          a.userId.name.localeCompare(b.userId.name)
+        );
+        setStudents(sortedStudents);
       } catch (err) {
         console.error(err);
+      } finally {
+        setLoading(false); // stop loading after fetch
       }
     }
     fetchStudents();
@@ -349,56 +354,62 @@ export default function Students() {
       </form>
 
       {/* All students table */}
-      <Table className="max-w-3xl mx-auto">
-        <TableHeader>
-          <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Email</TableHead>
-            <TableHead>Gender</TableHead>
-            <TableHead>Year</TableHead>
-            <TableHead>Major</TableHead>
-            <TableHead className="text-center">Edit</TableHead>
-            <TableHead className="text-center">Delete</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {students.map((student) => (
-            <TableRow key={student._id}>
-              <TableCell className="font-medium">
-                {student.userId.name}
-              </TableCell>
-              <TableCell>{student.userId.email}</TableCell>
-              <TableCell>{student.userId.gender}</TableCell>
-              <TableCell>{student.year}</TableCell>
-              <TableCell>{student.major}</TableCell>
-
-              {/* Edit button */}
-              <TableCell className="text-center">
-                <Button
-                  size="icon"
-                  variant="outline"
-                  className="rounded-md hover:bg-yellow-500 hover:text-white"
-                  onClick={() => handleEdit(student)}
-                >
-                  <Pencil className="w-4 h-4" />{" "}
-                </Button>
-              </TableCell>
-
-              {/* Delete button */}
-              <TableCell className="text-center">
-                <Button
-                  size="icon"
-                  variant="outline"
-                  className="rounded-md hover:bg-red-500 hover:text-white"
-                  onClick={() => openDeleteModal(student)}
-                >
-                  <Trash className="w-4 h-4" />
-                </Button>
-              </TableCell>
+      {loading ? (
+        <p className="text-center mt-4 text-gray-500">Loading students...</p>
+      ) : students.length === 0 ? (
+        <p className="text-center mt-4 text-gray-500">No students found yet.</p>
+      ) : (
+        <Table className="max-w-3xl mx-auto">
+          <TableHeader>
+            <TableRow>
+              <TableHead>Name</TableHead>
+              <TableHead>Email</TableHead>
+              <TableHead>Gender</TableHead>
+              <TableHead>Year</TableHead>
+              <TableHead>Major</TableHead>
+              <TableHead className="text-center">Edit</TableHead>
+              <TableHead className="text-center">Delete</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {students.map((student) => (
+              <TableRow key={student._id}>
+                <TableCell className="font-medium">
+                  {student.userId.name}
+                </TableCell>
+                <TableCell>{student.userId.email}</TableCell>
+                <TableCell>{student.userId.gender}</TableCell>
+                <TableCell>{student.year}</TableCell>
+                <TableCell>{student.major}</TableCell>
+
+                {/* Edit button */}
+                <TableCell className="text-center">
+                  <Button
+                    size="icon"
+                    variant="outline"
+                    className="rounded-md hover:bg-yellow-500 hover:text-white"
+                    onClick={() => handleEdit(student)}
+                  >
+                    <Pencil className="w-4 h-4" />{" "}
+                  </Button>
+                </TableCell>
+
+                {/* Delete button */}
+                <TableCell className="text-center">
+                  <Button
+                    size="icon"
+                    variant="outline"
+                    className="rounded-md hover:bg-red-500 hover:text-white"
+                    onClick={() => openDeleteModal(student)}
+                  >
+                    <Trash className="w-4 h-4" />
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      )}
 
       {/* Delete Confirmation Modal */}
       <Modal

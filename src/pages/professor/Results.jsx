@@ -49,54 +49,42 @@ export default function Results() {
 
   return (
     <section className="h-full flex flex-col gap-8 items-center">
-      <h1 className="font-bold text-2xl text-center">Exam Results</h1>
+      <h1 className="font-bold text-2xl text-center">Manage Results</h1>
 
-      {/* Professor Info */}
+      {/* Professor Info Card */}
       <Card className="max-w-xl w-full">
         <CardContent className="grid md:grid-cols-2 gap-6">
           <div>
-            <strong>Professor:</strong> {user?.name}
+            <strong>Professor Name: </strong>
+            <span>{user.name}</span>
           </div>
           <div>
-            <strong>Department:</strong> {user?.professor?.department ?? "—"}
+            <strong>Department: </strong>
+            <span>{user.professor?.department ?? "—"}</span>
           </div>
         </CardContent>
       </Card>
 
       {/* Results Table */}
-      <Table className="max-w-5xl mx-auto">
-        <TableHeader>
-          <TableRow>
-            <TableHead>Subject</TableHead>
-            <TableHead>Year</TableHead>
-            <TableHead>Exam Date</TableHead>
-            <TableHead>Total Results</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead className="text-center">Action</TableHead>
-          </TableRow>
-        </TableHeader>
+      {loading ? (
+        <p className="text-center text-muted-foreground">Loading results...</p>
+      ) : exams.length === 0 ? (
+        <p className="text-center text-muted-foreground">No exams found.</p>
+      ) : (
+        <Table className="max-w-4xl mx-auto">
+          <TableHeader>
+            <TableRow>
+              <TableHead>Subject Name</TableHead>
+              <TableHead>Year</TableHead>
+              <TableHead>Exam Date</TableHead>
+              <TableHead>Total Results</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead className="text-center">Action</TableHead>
+            </TableRow>
+          </TableHeader>
 
-        <TableBody>
-          {loading ? (
-            <TableRow>
-              <TableCell
-                colSpan={6}
-                className="text-center text-muted-foreground"
-              >
-                Loading results...
-              </TableCell>
-            </TableRow>
-          ) : exams.length === 0 ? (
-            <TableRow>
-              <TableCell
-                colSpan={6}
-                className="text-center text-muted-foreground"
-              >
-                No exams found.
-              </TableCell>
-            </TableRow>
-          ) : (
-            exams.map((exam) => (
+          <TableBody>
+            {exams.map((exam) => (
               <TableRow key={exam._id}>
                 <TableCell className="font-medium">
                   {exam.subject?.name ?? "—"}
@@ -107,7 +95,9 @@ export default function Results() {
                     ? new Date(exam.date).toLocaleDateString("en-GB")
                     : "—"}
                 </TableCell>
-                <TableCell>{exam.totalResults}</TableCell>
+                <TableCell>
+                  {exam.totalResults ?? 0}/{exam.totalStudents ?? 0}
+                </TableCell>
                 <TableCell>
                   {exam.published ? (
                     <Badge variant="secondary" className="bg-green-200">
@@ -130,10 +120,10 @@ export default function Results() {
                   </Button>
                 </TableCell>
               </TableRow>
-            ))
-          )}
-        </TableBody>
-      </Table>
+            ))}
+          </TableBody>
+        </Table>
+      )}
     </section>
   );
 }

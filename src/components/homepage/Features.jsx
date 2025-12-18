@@ -1,27 +1,20 @@
-import { Button } from "@/components/ui/button";
-import featureCourse from "@/assets/images/featureCourse.webp";
-import featureNotify from "@/assets/images/featureNotify.webp";
-import featureSecurity from "@/assets/images/featureSecurity.webp";
-
 export default function Features() {
   const features = [
     {
       title: "Smart Course Access",
-      desc: "Access all your courses from one streamlined dashboard designed for focus and clarity. No clutter, just learning that keeps you organized and on track throughout the semester.",
-      image: featureCourse,
-      cta: "Explore Courses",
+      description:
+        "Access all your courses from one streamlined dashboard designed for focus and clarity. No clutter, just learning that keeps you organized and on track throughout the semester.",
+      image: "/homepage/feature1.webp",
     },
     {
       title: "Instant Notifications",
-      desc: "Never miss an update, get real-time notifications for new grades, class changes, and university announcements. Stay informed the moment something important happens.",
-      image: featureNotify,
-      cta: "Enable Alerts",
+      description: "Never miss an update, get real-time notifications for new grades, class changes, and university announcements. Stay informed the moment something important happens.",
+      image: "/homepage/feature2.webp",
     },
     {
       title: "Privacy & Security",
-      desc: "Your academic data is encrypted and protected with enterprise-level security protocols for full peace of mind. We prioritize confidentiality and secure access at every level.",
-      image: featureSecurity,
-      cta: "Learn More",
+      description: "Your academic data is encrypted and protected with enterprise-level security protocols for full peace of mind. We prioritize confidentiality and secure access at every level.",
+      image: "/homepage/feature3.webp",
     },
   ];
 
@@ -63,7 +56,7 @@ export default function Features() {
               <div className="w-full md:w-1/2 text-center md:text-left">
                 <h3 className="text-2xl font-semibold mb-3">{feature.title}</h3>
                 <p className="text-muted-foreground mb-6 leading-relaxed">
-                  {feature.desc}
+                  {feature.description}
                 </p>
               </div>
             </div>

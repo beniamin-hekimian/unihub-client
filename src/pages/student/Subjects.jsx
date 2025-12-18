@@ -15,6 +15,7 @@ import { useAuth } from "@/context/AuthContext";
 export default function Subjects() {
   const { user } = useAuth();
   const [enrolments, setEnrolments] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchSubjectsByStudent() {
@@ -31,6 +32,8 @@ export default function Subjects() {
         }
       } catch (err) {
         console.error("Failed to fetch subjects:", err);
+      } finally {
+        setLoading(false);
       }
     }
     fetchSubjectsByStudent();
@@ -38,9 +41,7 @@ export default function Subjects() {
 
   return (
     <section className="h-full flex gap-8 flex-col items-center">
-      <h1 className="font-bold text-2xl text-center">
-        Student Assigned Subjects
-      </h1>
+      <h1 className="font-bold text-2xl text-center">My Subjects</h1>
 
       {/* Student Info Card */}
       <Card className="max-w-xl w-full">
@@ -57,34 +58,31 @@ export default function Subjects() {
       </Card>
 
       {/* Student Subjects Table */}
-      <Table className="max-w-4xl mx-auto">
-        <TableHeader>
-          <TableRow>
-            <TableHead>Subject Name</TableHead>
-            <TableHead>Subject Year</TableHead>
-            <TableHead>Department</TableHead>
-            <TableHead>Status</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {enrolments.length === 0 ? (
+      {loading ? (
+        <p className="text-center text-muted-foreground">Loading subjects...</p>
+      ) : enrolments.length === 0 ? (
+        <p className="text-center text-muted-foreground">
+          No subjects assigned yet.
+        </p>
+      ) : (
+        <Table className="max-w-3xl mx-auto">
+          <TableHeader>
             <TableRow>
-              <TableCell
-                colSpan={4}
-                className="text-center text-muted-foreground"
-              >
-                No subjects assigned yet.
-              </TableCell>
+              <TableHead>Subject Name</TableHead>
+              <TableHead>Year</TableHead>
+              <TableHead>Department</TableHead>
+              <TableHead className="text-center">Status</TableHead>
             </TableRow>
-          ) : (
-            enrolments.map((e) => (
+          </TableHeader>
+          <TableBody>
+            {enrolments.map((e) => (
               <TableRow key={e._id}>
                 <TableCell className="font-medium">
                   {e.subjectId.name}
                 </TableCell>
                 <TableCell>{e.subjectId.year}</TableCell>
                 <TableCell>{e.subjectId.department ?? "—"}</TableCell>
-                <TableCell>
+                <TableCell className="text-center">
                   <Badge
                     variant="secondary"
                     className={e.passed ? "bg-green-200" : "bg-yellow-200"}
@@ -93,10 +91,10 @@ export default function Subjects() {
                   </Badge>
                 </TableCell>
               </TableRow>
-            ))
-          )}
-        </TableBody>
-      </Table>
+            ))}
+          </TableBody>
+        </Table>
+      )}
     </section>
   );
 }

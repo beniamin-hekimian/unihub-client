@@ -14,8 +14,10 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { useAuth } from "@/context/AuthContext";
 
 export default function ExamResults() {
+  const { user } = useAuth();
   const { examId } = useParams();
 
   const [exam, setExam] = useState(null);
@@ -107,30 +109,40 @@ export default function ExamResults() {
 
   return (
     <section className="h-full flex flex-col gap-6 items-center">
-      <h1 className="font-bold text-2xl text-center">Exam Results</h1>
+      <h1 className="font-bold text-2xl text-center">
+        Manage {exam.subject.name} Results
+      </h1>
 
       {/* Exam Info */}
       <Card className="max-w-2xl w-full">
         <CardContent className="grid md:grid-cols-2 gap-4">
           <div>
-            <strong>Subject:</strong> {exam.subject.name} (Year{" "}
-            {exam.subject.year})
+            <strong>Professor Name: </strong>
+            <span>{user.name}</span>
           </div>
           <div>
-            <strong>Date:</strong>{" "}
+            <strong>Department: </strong>
+            <span>{user.professor?.department ?? "—"}</span>
+          </div>
+          <div>
+            <strong>Subject Year: </strong>
+            <span>{exam.subject.year}</span>
+          </div>
+          <div>
+            <strong>Exam Date: </strong>{" "}
             {new Date(exam.date).toLocaleDateString("en-GB")}
           </div>
         </CardContent>
       </Card>
 
       {/* Results Table */}
-      <Table className="max-w-4xl mx-auto">
+      <Table className="max-w-3xl mx-auto">
         <TableHeader>
           <TableRow>
-            <TableHead>Student</TableHead>
+            <TableHead>Student Name</TableHead>
             <TableHead>Email</TableHead>
             <TableHead>Mark</TableHead>
-            <TableHead>Status</TableHead>
+            <TableHead className="text-center">Status</TableHead>
           </TableRow>
         </TableHeader>
 
@@ -160,7 +172,7 @@ export default function ExamResults() {
                     }
                   />
                 </TableCell>
-                <TableCell>
+                <TableCell className="text-center">
                   {s.resultId ? (
                     s.published ? (
                       <Badge variant="secondary" className="bg-green-200">

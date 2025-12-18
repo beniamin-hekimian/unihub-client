@@ -65,39 +65,26 @@ export default function Exams() {
       </Card>
 
       {/* Exams Table */}
-      <Table className="max-w-5xl mx-auto">
-        <TableHeader>
-          <TableRow>
-            <TableHead>Exam</TableHead>
-            <TableHead>Year</TableHead>
-            <TableHead>Date</TableHead>
-            <TableHead>Duration</TableHead>
-            <TableHead>Location</TableHead>
-            <TableHead>Status</TableHead>
-          </TableRow>
-        </TableHeader>
-
-        <TableBody>
-          {loading ? (
+      {loading ? (
+        <p className="text-center text-muted-foreground">Loading exams...</p>
+      ) : sortedExams.length === 0 ? (
+        <p className="text-center text-muted-foreground">
+          No exams scheduled yet.
+        </p>
+      ) : (
+        <Table className="max-w-4xl mx-auto">
+          <TableHeader>
             <TableRow>
-              <TableCell
-                colSpan={6}
-                className="text-center text-muted-foreground"
-              >
-                Loading exams...
-              </TableCell>
+              <TableHead>Exam</TableHead>
+              <TableHead>Year</TableHead>
+              <TableHead>Date</TableHead>
+              <TableHead>Duration</TableHead>
+              <TableHead>Location</TableHead>
+              <TableHead className="text-center">Status</TableHead>
             </TableRow>
-          ) : sortedExams.length === 0 ? (
-            <TableRow>
-              <TableCell
-                colSpan={6}
-                className="text-center text-muted-foreground"
-              >
-                No exams scheduled yet.
-              </TableCell>
-            </TableRow>
-          ) : (
-            sortedExams.map((exam) => {
+          </TableHeader>
+          <TableBody>
+            {sortedExams.map((exam) => {
               const isPast = exam.date && new Date(exam.date) < new Date();
               return (
                 <TableRow key={exam._id}>
@@ -114,7 +101,7 @@ export default function Exams() {
                     {exam.duration ? `${exam.duration} min` : "—"}
                   </TableCell>
                   <TableCell>{exam.location ?? "—"}</TableCell>
-                  <TableCell>
+                  <TableCell className="text-center">
                     <Badge
                       variant="secondary"
                       className={isPast ? "bg-red-200" : "bg-blue-200"}
@@ -124,10 +111,10 @@ export default function Exams() {
                   </TableCell>
                 </TableRow>
               );
-            })
-          )}
-        </TableBody>
-      </Table>
+            })}
+          </TableBody>
+        </Table>
+      )}
     </section>
   );
 }

@@ -5,13 +5,7 @@ import { Pencil, Trash } from "lucide-react";
 import { toast } from "react-toastify";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Field,
-  FieldGroup,
-  FieldLabel,
-  FieldSeparator,
-  FieldSet,
-} from "@/components/ui/field";
+import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
 import {
   Select,
   SelectContent,
@@ -31,6 +25,7 @@ import {
 export default function Subjects() {
   const [subjects, setSubjects] = useState([]);
   const [professors, setProfessors] = useState([]);
+  const [loading, setLoading] = useState(true); // loading state for subjects
   const [professorsLoading, setProfessorsLoading] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -53,10 +48,16 @@ export default function Subjects() {
           { withCredentials: true }
         );
         if (res.data.subjects) {
-          setSubjects(res.data.subjects);
+          // sort subjects by name
+          const sortedSubjects = res.data.subjects.sort((a, b) =>
+            a.name.localeCompare(b.name)
+          );
+          setSubjects(sortedSubjects);
         }
       } catch (err) {
         console.error(err);
+      } finally {
+        setLoading(false); // stop loading the table
       }
     }
     fetchSubjects();
@@ -240,7 +241,9 @@ export default function Subjects() {
 
   return (
     <section className="h-full flex gap-8 flex-col items-center">
-      <h1 className="font-bold text-2xl text-center">Manage University Subjects</h1>
+      <h1 className="font-bold text-2xl text-center">
+        Manage University Subjects
+      </h1>
 
       {/* Form */}
       <form
@@ -382,54 +385,60 @@ export default function Subjects() {
         </FieldGroup>
       </form>
 
-      {/* Table */}
-      <Table className="max-w-3xl mx-auto">
-        <TableHeader>
-          <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Year</TableHead>
-            <TableHead>Department</TableHead>
-            <TableHead>Professor</TableHead>
-            <TableHead className="text-center">Edit</TableHead>
-            <TableHead className="text-center">Delete</TableHead>
-          </TableRow>
-        </TableHeader>
-
-        <TableBody>
-          {subjects.map((subject) => (
-            <TableRow key={subject._id}>
-              <TableCell className="font-medium">{subject.name}</TableCell>
-              <TableCell>{subject.year}</TableCell>
-              <TableCell>{subject.department}</TableCell>
-              <TableCell>
-                {subject.professorId ? subject.professorId.userId?.name : "—"}
-              </TableCell>
-
-              <TableCell className="text-center">
-                <Button
-                  size="icon"
-                  variant="outline"
-                  onClick={() => handleEdit(subject)}
-                  className="rounded-md hover:bg-yellow-500 hover:text-white"
-                >
-                  <Pencil className="w-4 h-4" />
-                </Button>
-              </TableCell>
-
-              <TableCell className="text-center">
-                <Button
-                  size="icon"
-                  variant="outline"
-                  onClick={() => openDeleteModal(subject)}
-                  className="rounded-md hover:bg-red-500 hover:text-white"
-                >
-                  <Trash className="w-4 h-4" />
-                </Button>
-              </TableCell>
+      {/* All subjects table */}
+      {loading ? (
+        <p className="text-center mt-4 text-gray-500">Loading subjects...</p>
+      ) : subjects.length === 0 ? (
+        <p className="text-center mt-4 text-gray-500">No subjects found yet.</p>
+      ) : (
+        <Table className="max-w-3xl mx-auto">
+          <TableHeader>
+            <TableRow>
+              <TableHead>Name</TableHead>
+              <TableHead>Year</TableHead>
+              <TableHead>Department</TableHead>
+              <TableHead>Professor</TableHead>
+              <TableHead className="text-center">Edit</TableHead>
+              <TableHead className="text-center">Delete</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+
+          <TableBody>
+            {subjects.map((subject) => (
+              <TableRow key={subject._id}>
+                <TableCell className="font-medium">{subject.name}</TableCell>
+                <TableCell>{subject.year}</TableCell>
+                <TableCell>{subject.department}</TableCell>
+                <TableCell>
+                  {subject.professorId ? subject.professorId.userId?.name : "—"}
+                </TableCell>
+
+                <TableCell className="text-center">
+                  <Button
+                    size="icon"
+                    variant="outline"
+                    onClick={() => handleEdit(subject)}
+                    className="rounded-md hover:bg-yellow-500 hover:text-white"
+                  >
+                    <Pencil className="w-4 h-4" />
+                  </Button>
+                </TableCell>
+
+                <TableCell className="text-center">
+                  <Button
+                    size="icon"
+                    variant="outline"
+                    onClick={() => openDeleteModal(subject)}
+                    className="rounded-md hover:bg-red-500 hover:text-white"
+                  >
+                    <Trash className="w-4 h-4" />
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      )}
 
       {/* Delete modal */}
       <Modal

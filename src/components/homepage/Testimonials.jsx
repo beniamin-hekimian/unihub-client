@@ -1,8 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Quote } from "lucide-react";
-import student1 from "@/assets/images/student1.webp";
-import student2 from "@/assets/images/student2.webp";
-import student3 from "@/assets/images/student3.webp";
 
 export default function Testimonials() {
   const testimonials = [
@@ -11,21 +8,21 @@ export default function Testimonials() {
       role: "Computer Science Student",
       quote:
         "UniHub simplified my academic life. I can check my grades and schedules instantly without waiting for emails.",
-      image: student1,
+      image: "/homepage/student1.webp",
     },
     {
       name: "Ali Mansour",
       role: "Information Systems Major",
       quote:
         "Everything I need is in one place - courses, announcements, and results. It feels fast, private, and reliable.",
-      image: student2,
+      image: "/homepage/student2.webp",
     },
     {
       name: "Nour Khaled",
       role: "Software Engineering Student",
       quote:
         "The real-time notifications and clean interface keep me on track. UniHub makes studying feel effortless.",
-      image: student3,
+      image: "/homepage/student3.webp",
     },
   ];
 

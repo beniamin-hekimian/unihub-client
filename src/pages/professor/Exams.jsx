@@ -74,7 +74,7 @@ export default function Exams() {
 
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/subjects?professorId=${
+          `${import.meta.env.VITE_BACKEND_URL}/subjects/professors/${
             user.professor.id
           }`,
           { withCredentials: true }
@@ -182,7 +182,9 @@ export default function Exams() {
   }
 
   // Sort exams by date
-  const sortedExams = exams.sort((a, b) => new Date(a.date) - new Date(b.date));
+  const sortedExams = [...exams].sort(
+    (a, b) => new Date(a.date) - new Date(b.date)
+  );
 
   return (
     <section className="h-full flex flex-col gap-8 items-center">
@@ -316,42 +318,30 @@ export default function Exams() {
         </FieldGroup>
       </form>
 
-      {/* Table */}
-      <Table className="max-w-3xl mx-auto">
-        <TableHeader>
-          <TableRow>
-            <TableHead>Subject</TableHead>
-            <TableHead>Date</TableHead>
-            <TableHead>Duration</TableHead>
-            <TableHead>Location</TableHead>
-            <TableHead className="text-center">Edit</TableHead>
-            <TableHead className="text-center">Delete</TableHead>
-          </TableRow>
-        </TableHeader>
+      {/* Exams Table */}
+      {examsLoading ? (
+        <p className="text-center text-muted-foreground">Loading exams...</p>
+      ) : exams.length === 0 ? (
+        <p className="text-center text-muted-foreground">No exams available</p>
+      ) : (
+        <Table className="max-w-4xl mx-auto">
+          <TableHeader>
+            <TableRow>
+              <TableHead>Subject Name</TableHead>
+              <TableHead>Exam Date</TableHead>
+              <TableHead>Duration</TableHead>
+              <TableHead>Location</TableHead>
+              <TableHead className="text-center">Edit</TableHead>
+              <TableHead className="text-center">Delete</TableHead>
+            </TableRow>
+          </TableHeader>
 
-        <TableBody>
-          {examsLoading ? (
-            <TableRow>
-              <TableCell
-                colSpan={6}
-                className="text-center text-muted-foreground"
-              >
-                Loading exams...
-              </TableCell>
-            </TableRow>
-          ) : exams.length === 0 ? (
-            <TableRow>
-              <TableCell
-                colSpan={6}
-                className="text-center text-muted-foreground"
-              >
-                No exams available
-              </TableCell>
-            </TableRow>
-          ) : (
-            sortedExams.map((exam) => (
+          <TableBody>
+            {sortedExams.map((exam) => (
               <TableRow key={exam._id}>
-                <TableCell>{exam.subjectId?.name || "—"}</TableCell>
+                <TableCell className="font-medium">
+                  {exam.subjectId?.name || "—"}
+                </TableCell>
                 <TableCell>
                   {exam.date
                     ? new Date(exam.date).toLocaleDateString("en-GB")
@@ -382,10 +372,10 @@ export default function Exams() {
                   </Button>
                 </TableCell>
               </TableRow>
-            ))
-          )}
-        </TableBody>
-      </Table>
+            ))}
+          </TableBody>
+        </Table>
+      )}
 
       {/* Delete Modal */}
       <Modal

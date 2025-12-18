@@ -9,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Card, CardContent } from "@/components/ui/card";
 import { useAuth } from "@/context/AuthContext";
 
 export default function StudentResults() {
@@ -44,65 +45,73 @@ export default function StudentResults() {
   }, [user]);
 
   return (
-    <section className="h-full flex flex-col gap-6 items-center">
+    <section className="h-full flex flex-col gap-8 items-center">
       <h1 className="text-2xl font-bold text-center">My Results</h1>
 
-      <Table className="max-w-4xl mx-auto">
-        <TableHeader>
-          <TableRow>
-            <TableHead>Subject</TableHead>
-            <TableHead>Exam Date</TableHead>
-            <TableHead className="text-center">Mark</TableHead>
-            <TableHead className="text-center">Status</TableHead>
-          </TableRow>
-        </TableHeader>
+      {/* Student Info Card */}
+      <Card className="max-w-xl w-full">
+        <CardContent className="grid md:grid-cols-2 gap-6">
+          <div>
+            <strong>Student Name: </strong>
+            <span>{user?.name}</span>
+          </div>
+          <div>
+            <strong>Major: </strong>
+            <span>{user?.student?.major ?? "—"}</span>
+          </div>
+        </CardContent>
+      </Card>
 
-        <TableBody>
-          {loading ? (
+      {/* Student results table */}
+      {loading ? (
+        <p className="text-center text-muted-foreground">Loading results...</p>
+      ) : results.length === 0 ? (
+        <p className="text-center text-muted-foreground">
+          No published results available
+        </p>
+      ) : (
+        <Table className="max-w-2xl mx-auto">
+          <TableHeader>
             <TableRow>
-              <TableCell
-                colSpan={4}
-                className="text-center text-muted-foreground"
-              >
-                Loading results...
-              </TableCell>
+              <TableHead>Subject Name</TableHead>
+              <TableHead>Year</TableHead>
+              <TableHead>Exam Date</TableHead>
+              <TableHead className="text-center">Mark</TableHead>
+              <TableHead className="text-center">Status</TableHead>
             </TableRow>
-          ) : results.length === 0 ? (
-            <TableRow>
-              <TableCell
-                colSpan={4}
-                className="text-center text-muted-foreground"
-              >
-                No published results available
-              </TableCell>
-            </TableRow>
-          ) : (
-            results.map((result) => (
+          </TableHeader>
+
+          <TableBody>
+            {results.map((result) => (
               <TableRow key={result._id}>
-                <TableCell>{result.examId?.subjectId?.name || "—"}</TableCell>
-
+                <TableCell className="font-medium">
+                  {result.examId?.subjectId?.name || "—"}
+                </TableCell>
+                <TableCell>{result.examId?.subjectId?.year || "—"}</TableCell>
                 <TableCell>
                   {result.examId?.date
                     ? new Date(result.examId.date).toLocaleDateString("en-GB")
                     : "—"}
                 </TableCell>
-
                 <TableCell className="text-center font-semibold">
                   {result.mark}
                 </TableCell>
-
                 <TableCell className="text-center">
                   {result.passed ? (
-                    <Badge variant="secondary" className="bg-green-200">Passed</Badge>
+                    <Badge variant="secondary" className="bg-green-200">
+                      Passed
+                    </Badge>
                   ) : (
-                    <Badge variant="secondary" className="bg-red-200">Failed</Badge>
+                    <Badge variant="secondary" className="bg-red-200">
+                      Failed
+                    </Badge>
                   )}
                 </TableCell>
               </TableRow>
-            ))
-          )}
-        </TableBody>
-      </Table>
+            ))}
+          </TableBody>
+        </Table>
+      )}
     </section>
   );
 }
