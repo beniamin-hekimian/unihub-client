@@ -317,14 +317,17 @@ export default function Students() {
                     <SelectValue placeholder="Major" />
                   </SelectTrigger>
                   <SelectContent>
+                    <SelectItem value="Computer Science">
+                      Computer Science
+                    </SelectItem>
                     <SelectItem value="Software Engineering">
                       Software Engineering
                     </SelectItem>
-                    <SelectItem value="Computer Networks">
-                      Computer Networks
+                    <SelectItem value="Information Technology">
+                      Information Technology
                     </SelectItem>
-                    <SelectItem value="Artificial Intelligence">
-                      Artificial Intelligence
+                    <SelectItem value="Business Administration">
+                      Business Administration
                     </SelectItem>
                   </SelectContent>
                 </Select>
